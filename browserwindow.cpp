@@ -131,9 +131,9 @@ BrowserWindow::BrowserWindow(Browser *browser, QWebEngineProfile *profile, bool 
         connect(m_urlLineEdit, &QLineEdit::returnPressed, [this]() {
             m_tabWidget->setUrl(QUrl::fromUserInput(m_urlLineEdit->text()));
         });
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+//#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
         connect(m_tabWidget, &TabWidget::findTextFinished, this, &BrowserWindow::handleFindTextFinished);
-#endif
+//#endif
 
         QAction *focusUrlLineEditAction = new QAction(this);
         addAction(focusUrlLineEditAction);
@@ -145,6 +145,8 @@ BrowserWindow::BrowserWindow(Browser *browser, QWebEngineProfile *profile, bool 
 
     handleWebViewTitleChanged(QString());
     m_tabWidget->createTab();
+
+    //m_urlLineEdit->setDisabled(true);
 }
 
 QSize BrowserWindow::sizeHint() const
@@ -399,6 +401,7 @@ QToolBar *BrowserWindow::createToolBar()
         m_browser->downloadManagerWidget().show();
     });
 
+    //navigationBar->setVisible(false);
     return navigationBar;
 }
 
@@ -465,14 +468,14 @@ void BrowserWindow::handleFindActionTriggered()
                                            m_lastSearch, &ok);
     if (ok && !search.isEmpty()) {
         m_lastSearch = search;
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+//#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
         currentTab()->findText(m_lastSearch);
-#else
-        currentTab()->findText(m_lastSearch, 0, [this](bool found) {
-            if (!found)
-                statusBar()->showMessage(tr("\"%1\" not found.").arg(m_lastSearch));
-        });
-#endif
+//#else
+//        currentTab()->findText(m_lastSearch, 0, [this](bool found) {
+//            if (!found)
+//                statusBar()->showMessage(tr("\"%1\" not found.").arg(m_lastSearch));
+//        });
+//#endif
     }
 }
 

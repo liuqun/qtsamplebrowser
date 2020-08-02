@@ -48,80 +48,66 @@
 **
 ****************************************************************************/
 
-#include "browser.h"
-#include "browserwindow.h"
-#include "tabwidget.h"
-#include <QApplication>
-#include <QFile>
-#include <QLocale>
-#include <QTranslator>
-#include "languagechooser.h"
+#include "mainwindow.h"
 
-#include <QWebEngineProfile>
-#include <QWebEngineSettings>
+#include <QAction>
+#include <QCoreApplication>
+#include <QGroupBox>
+#include <QListWidget>
+#include <QMenuBar>
+#include <QRadioButton>
+#include <QStatusBar>
+#include <QVBoxLayout>
 
-#define DEFAULT_URL_STR "http://172.16.1.62:8000"
+static const char * const listEntries[] = {
+    QT_TRANSLATE_NOOP("MainWindow", "First"),
+    QT_TRANSLATE_NOOP("MainWindow", "Second"),
+    QT_TRANSLATE_NOOP("MainWindow", "Third"),
+    nullptr
+};
 
-QUrl commandLineUrlArgument()
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
 {
-    const QStringList args = QCoreApplication::arguments();
-    for (const QString &arg : args.mid(1)) {
-        if (!arg.startsWith(QLatin1Char('-')))
-            return QUrl::fromUserInput(arg);
-    }
-    return QUrl(QStringLiteral(DEFAULT_URL_STR));
+    centralWidget = new QWidget;
+    setCentralWidget(centralWidget);
+
+    createGroupBox();
+
+    listWidget = new QListWidget;
+    for (const char *entry : listEntries)
+        listWidget->addItem(tr(entry));
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(groupBox);
+    mainLayout->addWidget(listWidget);
+    centralWidget->setLayout(mainLayout);
+
+    exitAction = new QAction(tr("E&xit"), this);
+    connect(exitAction, &QAction::triggered, qApp, QCoreApplication::quit);
+
+    fileMenu = menuBar()->addMenu(tr("&File"));
+    fileMenu->setPalette(QPalette(Qt::red));
+    fileMenu->addAction(exitAction);
+
+    setWindowTitle(tr("Language: %1").arg(tr("English")));
+    statusBar()->showMessage(tr("Internationalization Example"));
+
+    if (tr("LTR") == "RTL")
+        setLayoutDirection(Qt::RightToLeft);
 }
 
-int main0(int argc, char **argv)
+void MainWindow::createGroupBox()
 {
-    Q_INIT_RESOURCE(i18n);
-    QApplication app(argc, argv);
-    LanguageChooser chooser(QLocale::system().name());
-    chooser.show();
-    return app.exec();
+    groupBox = new QGroupBox(tr("View"));
+    perspectiveRadioButton = new QRadioButton(tr("Perspective"));
+    isometricRadioButton = new QRadioButton(tr("Isometric"));
+    obliqueRadioButton = new QRadioButton(tr("Oblique"));
+    perspectiveRadioButton->setChecked(true);
 
-}
-
-int main(int argc, char **argv)
-{
-    Q_INIT_RESOURCE(i18n);
-    QCoreApplication::setOrganizationName("QtExamples");
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-
-    QApplication app(argc, argv);
-    app.setWindowIcon(QIcon(QStringLiteral(":AppLogoColor.png")));
-
-    QString defaultLocale = QLocale::system().name(); // e.g. "en_US", "zh_CN" or "de_DE"
-qDebug() << QLocale::system().name();
-    defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
-qDebug() << defaultLocale;
-
-    QTranslator translator;
-    qDebug() << translator.load(QStringLiteral(":/translations/i18n_zh.qm"));
-    qDebug() << app.installTranslator(&translator);
-
-    QWebEngineSettings::defaultSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
-//#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
-    QWebEngineSettings::defaultSettings()->setAttribute(QWebEngineSettings::DnsPrefetchEnabled, true);
-    QWebEngineProfile::defaultProfile()->setUseForGlobalCertificateVerification();
-//#endif
-
-    QUrl url = commandLineUrlArgument();
-
-    Browser browser;
-    BrowserWindow *window = browser.createWindow();
-    window->tabWidget()->setUrl(url);
-
-
-//    {QFile file;
-//        file.setFileName(QStringLiteral(":/translations/i18n_zh.qm"));
-//        if (!file.open(QIODevice::ReadOnly)) {
-//            return EXIT_FAILURE;
-//        }
-//        file.close();
-//    }
-
-
-    return app.exec();
+    QVBoxLayout *groupBoxLayout = new QVBoxLayout;
+    groupBoxLayout->addWidget(perspectiveRadioButton);
+    groupBoxLayout->addWidget(isometricRadioButton);
+    groupBoxLayout->addWidget(obliqueRadioButton);
+    groupBox->setLayout(groupBoxLayout);
 }

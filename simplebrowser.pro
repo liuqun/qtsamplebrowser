@@ -1,12 +1,35 @@
 TEMPLATE = app
 TARGET = simplebrowser
-QT += webenginewidgets
+QT += widgets webenginewidgets
+requires(qtConfig(listwidget))
+
+!gcc: QMAKE_CXXFLAGS+="/utf-8"
+win32: RC_ICONS=logo.ico
+
+HEADERS = \
+    languagechooser.h \
+    mainwindow.h
+
+SOURCES = \
+    languagechooser.cpp \
+    main.cpp \
+    mainwindow.cpp
+
+RESOURCES += \
+    i18n.qrc
+
+TRANSLATIONS += \
+    translations/i18n_en.ts \
+    translations/i18n_zh.ts
+
 
 HEADERS += \
     browser.h \
     browserwindow.h \
     downloadmanagerwidget.h \
     downloadwidget.h \
+    languagechooser.h \
+    mainwindow.h \
     tabwidget.h \
     webpage.h \
     webpopupwindow.h \
@@ -17,7 +40,8 @@ SOURCES += \
     browserwindow.cpp \
     downloadmanagerwidget.cpp \
     downloadwidget.cpp \
-    main.cpp \
+    languagechooser.cpp \
+    mainwindow.cpp \
     tabwidget.cpp \
     webpage.cpp \
     webpopupwindow.cpp \
@@ -31,6 +55,6 @@ FORMS += \
 
 RESOURCES += data/simplebrowser.qrc
 
-# install
-target.path = $$[QT_INSTALL_EXAMPLES]/webenginewidgets/simplebrowser
-INSTALLS += target
+## install
+#target.path = $$[QT_INSTALL_EXAMPLES]/webenginewidgets/simplebrowser
+#INSTALLS += target

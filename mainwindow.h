@@ -48,80 +48,39 @@
 **
 ****************************************************************************/
 
-#include "browser.h"
-#include "browserwindow.h"
-#include "tabwidget.h"
-#include <QApplication>
-#include <QFile>
-#include <QLocale>
-#include <QTranslator>
-#include "languagechooser.h"
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-#include <QWebEngineProfile>
-#include <QWebEngineSettings>
+#include <QMainWindow>
 
-#define DEFAULT_URL_STR "http://172.16.1.62:8000"
+QT_BEGIN_NAMESPACE
+class QAction;
+class QGroupBox;
+class QLabel;
+class QListWidget;
+class QMenu;
+class QRadioButton;
+QT_END_NAMESPACE
 
-QUrl commandLineUrlArgument()
+class MainWindow : public QMainWindow
 {
-    const QStringList args = QCoreApplication::arguments();
-    for (const QString &arg : args.mid(1)) {
-        if (!arg.startsWith(QLatin1Char('-')))
-            return QUrl::fromUserInput(arg);
-    }
-    return QUrl(QStringLiteral(DEFAULT_URL_STR));
-}
+    Q_OBJECT
 
-int main0(int argc, char **argv)
-{
-    Q_INIT_RESOURCE(i18n);
-    QApplication app(argc, argv);
-    LanguageChooser chooser(QLocale::system().name());
-    chooser.show();
-    return app.exec();
+public:
+    MainWindow(QWidget *parent = nullptr);
 
-}
+private:
+    void createGroupBox();
 
-int main(int argc, char **argv)
-{
-    Q_INIT_RESOURCE(i18n);
-    QCoreApplication::setOrganizationName("QtExamples");
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QWidget *centralWidget;
+    QLabel *label;
+    QGroupBox *groupBox;
+    QListWidget *listWidget;
+    QRadioButton *perspectiveRadioButton;
+    QRadioButton *isometricRadioButton;
+    QRadioButton *obliqueRadioButton;
+    QMenu *fileMenu;
+    QAction *exitAction;
+};
 
-    QApplication app(argc, argv);
-    app.setWindowIcon(QIcon(QStringLiteral(":AppLogoColor.png")));
-
-    QString defaultLocale = QLocale::system().name(); // e.g. "en_US", "zh_CN" or "de_DE"
-qDebug() << QLocale::system().name();
-    defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
-qDebug() << defaultLocale;
-
-    QTranslator translator;
-    qDebug() << translator.load(QStringLiteral(":/translations/i18n_zh.qm"));
-    qDebug() << app.installTranslator(&translator);
-
-    QWebEngineSettings::defaultSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
-//#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
-    QWebEngineSettings::defaultSettings()->setAttribute(QWebEngineSettings::DnsPrefetchEnabled, true);
-    QWebEngineProfile::defaultProfile()->setUseForGlobalCertificateVerification();
-//#endif
-
-    QUrl url = commandLineUrlArgument();
-
-    Browser browser;
-    BrowserWindow *window = browser.createWindow();
-    window->tabWidget()->setUrl(url);
-
-
-//    {QFile file;
-//        file.setFileName(QStringLiteral(":/translations/i18n_zh.qm"));
-//        if (!file.open(QIODevice::ReadOnly)) {
-//            return EXIT_FAILURE;
-//        }
-//        file.close();
-//    }
-
-
-    return app.exec();
-}
+#endif

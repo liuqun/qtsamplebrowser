@@ -2,8 +2,6 @@
     <qresource prefix="/">
         <file>AppLogoColor.png</file>
         <file>ninja.png</file>
-    </qresource>
-    <qresource prefix="/">
         <file alias="dialog-error.png">3rdparty/dialog-error.png</file>
         <file alias="edit-clear.png">3rdparty/edit-clear.png</file>
         <file alias="go-bottom.png">3rdparty/go-bottom.png</file>
