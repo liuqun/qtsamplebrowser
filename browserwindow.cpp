@@ -159,8 +159,8 @@ QSize BrowserWindow::sizeHint() const
 QMenu *BrowserWindow::createFileMenu(TabWidget *tabWidget)
 {
     QMenu *fileMenu = new QMenu(tr("&File"));
-    fileMenu->addAction(tr("&New Window"), this, &BrowserWindow::handleNewWindowTriggered, QKeySequence::New);
-    fileMenu->addAction(tr("New &Incognito Window"), this, &BrowserWindow::handleNewIncognitoWindowTriggered);
+    //fileMenu->addAction(tr("&New Window"), this, &BrowserWindow::handleNewWindowTriggered, QKeySequence::New);
+    //fileMenu->addAction(tr("New &Incognito Window"), this, &BrowserWindow::handleNewIncognitoWindowTriggered);
 
     QAction *newTabAction = new QAction(tr("New &Tab"), this);
     newTabAction->setShortcuts(QKeySequence::AddTab);
@@ -170,7 +170,7 @@ QMenu *BrowserWindow::createFileMenu(TabWidget *tabWidget)
     });
     fileMenu->addAction(newTabAction);
 
-    fileMenu->addAction(tr("&Open File..."), this, &BrowserWindow::handleFileOpenTriggered, QKeySequence::Open);
+    //fileMenu->addAction(tr("&Open File..."), this, &BrowserWindow::handleFileOpenTriggered, QKeySequence::Open);
     fileMenu->addSeparator();
 
     QAction *closeTabAction = new QAction(tr("&Close Tab"), this);

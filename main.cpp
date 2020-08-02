@@ -111,7 +111,9 @@ qDebug() << defaultLocale;
 
     Browser browser;
     BrowserWindow *window = browser.createWindow();
+    window->setWindowState(Qt::WindowMaximized);
     window->tabWidget()->setUrl(url);
+    window->show();
 
 
 //    {QFile file;

@@ -141,7 +141,7 @@
     </message>
     <message>
         <source>Qt Simple Browser</source>
-        <translation>装备分析浏览器</translation>
+        <translation>装备分析客户端</translation>
     </message>
     <message>
         <source>Open Web Resource</source>
