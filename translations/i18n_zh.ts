@@ -49,7 +49,7 @@
     </message>
     <message>
         <source>Find &amp;Previous</source>
-        <translation>查找上一个(&amp;N)</translation>
+        <translation>查找上一个(&amp;P)</translation>
     </message>
     <message>
         <source>&amp;View</source>
