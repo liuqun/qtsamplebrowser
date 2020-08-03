@@ -225,6 +225,11 @@ WebView *TabWidget::createBackgroundTab()
     setTabIcon(index, webView->favIcon());
     // Workaround for QTBUG-61770
     webView->resize(currentWidget()->size());
+#ifndef DEFAULT_URL_STR
+#pragma message("DEFAULT_URL_STR is not defined globally... Falling back to the following URL:")
+#define DEFAULT_URL_STR "http://172.16.1.62:8000"
+#endif
+    webView->setUrl(QUrl(QStringLiteral(DEFAULT_URL_STR)));
     webView->show();
     return webView;
 }
