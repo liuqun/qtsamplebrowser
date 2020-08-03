@@ -77,6 +77,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event) override;
+    void keyPressEvent(QKeyEvent *keyset) override;
 
 private slots:
     void handleNewWindowTriggered();

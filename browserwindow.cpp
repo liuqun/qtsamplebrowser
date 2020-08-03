@@ -69,6 +69,27 @@
 #include <QWebEngineFindTextResult>
 #endif
 #include <QWebEngineProfile>
+#include <QGuiApplication>
+#include <QDesktopWidget>
+
+void BrowserWindow::keyPressEvent(QKeyEvent *keyset)
+{
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QRect screenRect = screen->availableVirtualGeometry();
+    switch (keyset->key()) {
+    case Qt::Key_F11:
+        if (width()<=screenRect.width()-2) {
+            showFullScreen();
+            break;
+        } else {
+            setMinimumSize(1440,768);
+            showNormal();
+        }
+        break;
+    default:
+        break;
+    }
+}
 
 BrowserWindow::BrowserWindow(Browser *browser, QWebEngineProfile *profile, bool forDevTools)
     : m_browser(browser)
