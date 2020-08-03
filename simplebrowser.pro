@@ -3,6 +3,9 @@ TARGET = simplebrowser
 QT += widgets webenginewidgets
 requires(qtConfig(listwidget))
 
+#DEFINES+=DEFAULT_URL_STR=\\\"http://172.16.1.62:8000\\\"
+DEFINES+=DEFAULT_URL_STR=\\\"http://mirrors.163.com\\\"
+
 !gcc: QMAKE_CXXFLAGS+="/utf-8"
 win32: RC_ICONS=logo.ico
 
