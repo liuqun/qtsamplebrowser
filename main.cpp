@@ -95,10 +95,10 @@ qDebug() << defaultLocale;
     qDebug() << app.installTranslator(&translator);
 
     QWebEngineSettings::defaultSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
-//#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
     QWebEngineSettings::defaultSettings()->setAttribute(QWebEngineSettings::DnsPrefetchEnabled, true);
     QWebEngineProfile::defaultProfile()->setUseForGlobalCertificateVerification();
-//#endif
+#endif
 
     QUrl url = commandLineUrlArgument();
 
