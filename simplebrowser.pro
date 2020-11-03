@@ -9,14 +9,10 @@ DEFINES+=DEFAULT_URL_STR=\\\"http://mirrors.163.com\\\"
 !gcc: QMAKE_CXXFLAGS+="/utf-8"
 win32: RC_ICONS=logo.ico
 
-HEADERS = \
-    languagechooser.h \
-    mainwindow.h
+HEADERS =
 
 SOURCES = \
-    languagechooser.cpp \
-    main.cpp \
-    mainwindow.cpp
+    main.cpp
 
 RESOURCES += \
     i18n.qrc
@@ -31,8 +27,6 @@ HEADERS += \
     browserwindow.h \
     downloadmanagerwidget.h \
     downloadwidget.h \
-    languagechooser.h \
-    mainwindow.h \
     tabwidget.h \
     webpage.h \
     webpopupwindow.h \
@@ -43,8 +37,6 @@ SOURCES += \
     browserwindow.cpp \
     downloadmanagerwidget.cpp \
     downloadwidget.cpp \
-    languagechooser.cpp \
-    mainwindow.cpp \
     tabwidget.cpp \
     webpage.cpp \
     webpopupwindow.cpp \

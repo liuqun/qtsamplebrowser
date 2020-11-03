@@ -55,7 +55,6 @@
 #include <QFile>
 #include <QLocale>
 #include <QTranslator>
-#include "languagechooser.h"
 
 #include <QWebEngineProfile>
 #include <QWebEngineSettings>
@@ -75,15 +74,6 @@ QUrl commandLineUrlArgument()
     return QUrl(QStringLiteral(DEFAULT_URL_STR));
 }
 
-int main0(int argc, char **argv)
-{
-    Q_INIT_RESOURCE(i18n);
-    QApplication app(argc, argv);
-    LanguageChooser chooser(QLocale::system().name());
-    chooser.show();
-    return app.exec();
-
-}
 
 int main(int argc, char **argv)
 {
