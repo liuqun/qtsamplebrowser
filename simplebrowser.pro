@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = simplebrowser
+TARGET = chrome
 QT += widgets webenginewidgets
 requires(qtConfig(listwidget))
 
