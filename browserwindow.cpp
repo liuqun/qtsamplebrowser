@@ -82,7 +82,7 @@ void BrowserWindow::keyPressEvent(QKeyEvent *keyset)
             showFullScreen();
             break;
         } else {
-            setMinimumSize(1440,768);
+            setMinimumSize(640,480);
             showNormal();
         }
         break;
