@@ -106,8 +106,7 @@ qDebug() << defaultLocale;
     BrowserWindow *window = browser.createWindow();
     window->setWindowState(Qt::WindowMaximized);
     window->tabWidget()->setUrl(url);
-    window->show();
-
+    window->showFullScreen();
 
 //    {QFile file;
 //        file.setFileName(QStringLiteral(":/translations/i18n_zh.qm"));

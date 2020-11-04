@@ -112,11 +112,14 @@ BrowserWindow::BrowserWindow(Browser *browser, QWebEngineProfile *profile, bool 
 
         QToolBar *toolbar = createToolBar();
         addToolBar(toolbar);
+        toolbar->close(); // make the tool bar hidden by default
+        statusBar()->close(); // make the status bar hidden by default
         menuBar()->addMenu(createFileMenu(m_tabWidget));
         menuBar()->addMenu(createEditMenu());
         menuBar()->addMenu(createViewMenu(toolbar));
         menuBar()->addMenu(createWindowMenu(m_tabWidget));
         menuBar()->addMenu(createHelpMenu());
+        menuBar()->close(); // make the menu bar hidden by default
     }
 
     QWidget *centralWidget = new QWidget(this);
@@ -282,7 +285,7 @@ QMenu *BrowserWindow::createViewMenu(QToolBar *toolbar)
 
 
     viewMenu->addSeparator();
-    QAction *viewToolbarAction = new QAction(tr("Hide Toolbar"),this);
+    QAction *viewToolbarAction = new QAction(tr("Show Toolbar"),this);
     viewToolbarAction->setShortcut(tr("Ctrl+|"));
     connect(viewToolbarAction, &QAction::triggered, [toolbar,viewToolbarAction]() {
         if (toolbar->isVisible()) {
@@ -295,7 +298,7 @@ QMenu *BrowserWindow::createViewMenu(QToolBar *toolbar)
     });
     viewMenu->addAction(viewToolbarAction);
 
-    QAction *viewStatusbarAction = new QAction(tr("Hide Status Bar"), this);
+    QAction *viewStatusbarAction = new QAction(tr("Show Status Bar"), this);
     viewStatusbarAction->setShortcut(tr("Ctrl+/"));
     connect(viewStatusbarAction, &QAction::triggered, [this, viewStatusbarAction]() {
         if (statusBar()->isVisible()) {
